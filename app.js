@@ -2,6 +2,7 @@ const person = `<svg viewBox="0 0 40 64" xmlns="http://www.w3.org/2000/svg" aria
 
 const girl = `<svg viewBox="0 0 40 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse cx="21" cy="61" rx="14" ry="3" fill="#354534" opacity=".18"/><path d="M8 18Q5 0 21 1q16 0 13 23l2 13H7z" fill="#584033"/><path d="M16 46v13m11-13v13" stroke="#dba47b" stroke-width="5" stroke-linecap="round"/><path d="M12 58q-4 6 9 3v-4m3 1q-1 6 11 3l-6-4" fill="#73574c"/><path d="M13 28q9-5 15 0l7 22q-13 6-28 0z" fill="#c4898c"/><path d="M12 31L7 43m23-12 5 12" stroke="#e4b58c" stroke-width="5" stroke-linecap="round"/><circle cx="21" cy="17" r="11" fill="#edc39b"/><path d="M10 15Q8 1 22 2q15 1 11 15l-7-8q-5 6-16 6" fill="#584033"/><ellipse cx="17" cy="18" rx="1.2" ry="1.8" fill="#42362f"/><ellipse cx="25" cy="18" rx="1.2" ry="1.8" fill="#42362f"/><path d="M18 24q4 2 7-1" stroke="#a3695a" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M29 5l7-3-1 8-6-2" fill="#e7bc84"/></svg>`;
 const clamp = n => Math.max(0,Math.min(1,n));
+export function directionSymbol(phase,direction){return phase==='moving'?(direction===1?'↑':'↓'):'—';}
 
 export class Lift {
   constructor(policy='standard'){this.policy=policy;this.reset();}
@@ -73,7 +74,7 @@ export class Lift {
       if(this.elapsed>=.65){this.phase='open';this.elapsed=0;}
     }else if(this.phase==='open'){
       this.elapsed+=dt;this.serviceTime=this.elapsed;
-      const boardingDelay=1.3;
+      const boardingDelay=this.serviceFloor===5?0:1.3;
       if(this.person==='boarding'){
         this.boardProgress=clamp((this.elapsed-boardingDelay)/1.4);
         if(this.boardProgress===1){this.person='aboard';this.pausedForChoice=this.destination===null;}
@@ -82,7 +83,7 @@ export class Lift {
         this.boardProgress=clamp(this.elapsed/1.4);
         if(this.boardProgress===1)this.person='arrived';
       }
-      const dwell=4.5;
+      const dwell=this.serviceFloor===5?2.4:4.5;
       if(this.elapsed>=dwell&&!this.pausedForChoice){this.phase='closing';this.elapsed=0;}
     }else if(this.phase==='closing'){
       this.elapsed+=dt;
@@ -156,7 +157,7 @@ function render(){
   if(lift.person==='leaving')x=boySeat+(boyHome-boySeat)*lift.boardProgress;
   placeActor(boy,inside,x,originY(floor),height,['boarding','leaving'].includes(lift.person)&&lift.boardProgress>0&&lift.boardProgress<1);
   inside.hidden=!aboard;
-  const exchange=['opening','open','closing'].includes(lift.phase);
+  const exchange=lift.serviceFloor!==5&&['opening','open','closing'].includes(lift.phase);
   const t=lift.serviceTime;
   const entryProgress=clamp((t-.65)/2.75),exitProgress=clamp((t-.15)/2.8);
   const girlSeat=center-width*.85;
@@ -166,7 +167,7 @@ function render(){
   const incomingVisible=exchange&&lift.phase!=='opening';
   incoming.hidden=girlIn.hidden=!incomingVisible;
   outgoing.hidden=girlOut.hidden=!incomingVisible;
-  seated.hidden=exchange&&lift.phase!=='opening';
+  seated.hidden=(exchange&&lift.phase!=='opening')||Math.abs(lift.position-5)<.001;
   seated.style.cssText=`left:${girlSeat-cabin.offsetLeft-shell.offsetLeft-shell.clientLeft}px;top:${row-10-height-shell.offsetTop-shell.clientTop}px;height:${height}px`;
   placeActor(incoming,girlIn,inX,girlY,height,entryProgress>0&&entryProgress<1,clamp((t-.3)/.5));
   placeActor(outgoing,girlOut,outX,girlY,height,exitProgress>0&&exitProgress<1,1-clamp((t-2.75)/.65));
@@ -183,7 +184,12 @@ function render(){
   });
   ui.buttons.forEach(b=>{b.disabled=lift.person!=='aboard';b.setAttribute('aria-pressed',String(lift.calls.has(Number(b.dataset.destination))));});
   ui.console.classList.toggle('ready',lift.person==='aboard');
-  ui.display.textContent=`${Math.round(lift.position)} ${lift.phase==='idle'?'•':lift.direction===1?'↑':'↓'}`;
+  const symbol=directionSymbol(lift.phase,lift.direction);
+  document.querySelector('#display-floor').textContent=Math.round(lift.position);
+  const indicator=document.querySelector('#display-direction');
+  indicator.classList.toggle('downward',symbol==='↓');
+  indicator.querySelector('path').setAttribute('d',symbol==='—'?'M5 12h14':'M12 20V4m-6 6 6-6 6 6');
+  indicator.setAttribute('aria-label',language==='zh'?(symbol==='↑'?'上行':symbol==='↓'?'下行':'静止'):(symbol==='↑'?'Going up':symbol==='↓'?'Going down':'Stopped'));
   for(const policy of ['standard','observed'])document.querySelector('#'+policy).setAttribute('aria-pressed',String(lift.policy===policy));
 }
 if(typeof document!=='undefined'){

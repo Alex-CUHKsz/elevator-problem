@@ -12,3 +12,5 @@ main{height:100%;max-width:1180px;margin:auto;padding:16px 24px;display:flex;fle
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 
 @media(max-width:360px){.dorm-room{width:14px}.room-number{font-size:5px}.room-1{left:36%}}
+
+.display{display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:0;line-height:1.3}#display-direction{width:22px;height:24px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}#display-direction.downward{transform:rotate(180deg)}@media(max-width:600px){.display{gap:4px}#display-direction{width:18px;height:21px}}
