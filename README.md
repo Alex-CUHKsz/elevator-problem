@@ -37,7 +37,7 @@
 
 提前上车减少候梯，却增加乘梯时间和一次停靠；到达时间晚一个停靠周期。候梯时间不能代替完整体验评价，[2] 提供了等待时间建模的研究背景，但研究对象是群梯，并不验证本案例。没有能耗测量，不给出节电比例。**直接在第一次开门时清除下行呼叫，也可能漏接仍想等下行的乘客，不能据此作为修复方案。**
 
-演示支持中英切换、播放/暂停、下一事件、时间轴、重置和倍速；八层楼有不同风景。下一事件包括两模型的到层和开关门服务边界。固定为单梯、单个下行乘客和已有八楼目的请求，不代表完整电梯调度或安全控制系统。进一步确认需要在正常乘梯中记录方向指示、按钮状态与停靠顺序，并请校方或维保人员核查配置及日志。
+网页是固定一屏的交互演示，没有标题、说明或滚动条。可切换常规/校园策略与中英界面，在五楼按上/下行按钮；乘客自动上车后，可在轿厢面板选择 1–8 楼，到达后自动走出。点击 ↺ 重置。八层风景由楼板分隔。初始二楼轿厢内已有一位前往八楼的乘客；首次呼叫后运行。为方便操作，主角上车后会保持开门，直到选好目的楼层。研究表格是先前固定参数的算例，与网页动画速度分开；动画忽略加减速，不用于计时测量。单梯教学模型不代表完整调度或安全控制系统。进一步确认需要在正常乘梯中记录方向指示、按钮状态与停靠顺序，并请校方或维保人员核查配置及日志。
 
 ## English
 
@@ -53,7 +53,7 @@ With illustrative travel of **2 s per floor** and **6 s per stop**, the baseline
 
 The waiting-time study [2] informs evaluation, not diagnosis. Clearing an opposite-direction hall call merely because doors opened could leave other passengers unserved, so it is not a validated repair. Verification requires normal-use observations and qualified maintenance review of configuration/logs.
 
-The bilingual demo includes play/pause, next event, scrub, reset and playback speed. Each floor has a distinct landscape. It models one car, one down-call passenger and an existing floor-8 car request; it is not a production or safety controller.
+The fixed-screen demo has no headings, explanatory copy or scrollbars. Switch between Standard/Campus policies, call up or down at floor 5, then select floors 1–8 after the passenger walks into the car. The passenger exits at the first selected destination. Reset with ↺. Each landscape has a distinct floor slab. The car starts at floor 2 with an existing floor-8 passenger and starts moving on the first hall call. Doors wait for your first destination selection after boarding. The analytical timing table above is separate from animation speed; neither is a field measurement. This is an educational model, not a production or safety controller.
 
 ## References / 参考资料
 

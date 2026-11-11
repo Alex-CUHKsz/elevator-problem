@@ -1,18 +1,12 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5f0"><title>Elevator Problem · 多停的一层</title><link rel="stylesheet" href="style.css"><script type="module" src="app.js"></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eeeee7"><title>Elevator Problem</title><link rel="stylesheet" href="style.css"><script type="module" src="app.js"></script></head>
 <body>
-<header><a class="brand" href="./"><span class="brand-icon">↕</span> Elevator Problem</a><button id="language" class="pill" aria-label="Switch to English">English ↗</button></header>
 <main>
-<div class="intro"><div class="eyebrow" data-i="eyebrow"></div><h1 data-i="title"></h1><p data-i="subtitle"></p></div>
-<section class="experiment" aria-label="Elevator comparison">
-<div class="scenario"><span class="scenario-dot"></span><span data-i="scenario"></span><span class="scenario-tag" data-i="fixed"></span></div>
-<div class="comparison" id="comparison"></div>
-<div class="controls"><div class="actions"><button id="play" class="primary"></button><button id="step" class="secondary" data-i="step"></button><button id="reset" class="icon-button" aria-label="Reset">↺</button></div><div class="clock"><span data-i="clock"></span><strong id="clock">0 s</strong><select id="speed" aria-label="Playback speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></div></div>
-<div class="scrub"><input id="timeline" type="range" min="0" max="48" step="0.1" value="0" aria-label="Simulation timeline"></div>
-<div class="legend"><span><i class="person-dot"></i><span data-i="you"></span></span><span><i class="light-dot"></i><span data-i="pending"></span></span><span data-i="timing"></span></div>
-</section>
-<section class="explanation"><div><span class="eyebrow">01 / <span data-i="observationLabel"></span></span><h2 data-i="finding"></h2><p data-i="findingText"></p></div><div><span class="eyebrow">02 / <span data-i="hypothesisLabel"></span></span><h2 data-i="reason"></h2><p data-i="reasonText"></p></div><div><span class="eyebrow">03 / <span data-i="meaningLabel"></span></span><h2 data-i="meaning"></h2><p data-i="meaningText"></p></div></section>
-<details><summary data-i="sources"></summary><p data-i="sourceIntro"></p><ol><li><a href="https://acim.nidec.com/elevators/-/media/Project/Nidec/NidecElevator/MCE/PDFs/Specifications/Element-Hydro-Specification.pdf" target="_blank" rel="noreferrer">MCE · Element Hydraulic Elevator Control, p. 10</a><span data-i="source1"></span></li><li><a href="https://www.merl.com/publications/TR2004-148" target="_blank" rel="noreferrer">Nikovski & Brand (2004) · Exact Calculation of Expected Waiting Times for Group Elevator Control</a><span data-i="source2"></span></li></ol><p data-i="limits"></p></details>
-</main><footer><span data-i="footer"></span><a href="https://github.com/Alex-CUHKsz/elevator-problem" target="_blank" rel="noreferrer">GitHub ↗</a></footer>
+<nav class="tools" aria-label="Controls"><div class="policies"><button id="standard" aria-pressed="true">常规</button><button id="observed" aria-pressed="false">校园</button></div><div class="utilities"><button id="reset" aria-label="重置">↺</button><button id="language" aria-label="Switch to English">EN</button></div></nav>
+<div class="scene">
+<div class="building" id="building" aria-label="电梯楼层"></div>
+<aside class="console" aria-label="轿厢按钮"><div class="display" id="display" aria-live="off">2 ↑</div><div id="destinations" class="destinations"></div><div class="console-light"></div></aside>
+</div>
+</main>
 </body></html>
